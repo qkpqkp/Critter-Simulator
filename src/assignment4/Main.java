@@ -36,6 +36,7 @@ public class Main {
         myPackage = Critter.class.getPackage().toString().split(" ")[1];
     }
 //yay
+    //hi
     /**
      * Main method.
      * @param args args can be empty.  If not empty, provide two parameters -- the first is a file name, 
