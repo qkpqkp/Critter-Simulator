@@ -50,6 +50,29 @@ public abstract class Critter {
 	private int y_coord;
 	
 	protected final void walk(int direction) {
+		switch(direction) {
+			case 0: x_coord++;
+					break;
+			case 1: x_coord++;
+					y_coord++;
+					break;
+			case 2: y_coord++;
+					break;
+			case 3: x_coord--;
+					y_coord++;
+					break;
+			case 4: x_coord--;
+					break;
+			case 5: x_coord--;
+					y_coord--;
+					break;
+			case 6: y_coord--;
+					break;
+			case 7: x_coord++;
+					y_coord--;
+					break;
+			default: break;
+		}
 	}
 	
 	protected final void run(int direction) {
@@ -73,23 +96,28 @@ public abstract class Critter {
 	 * @throws InvalidCritterException
 	 * @throws ClassNotFoundException 
 	 */
-	public static void makeCritter(String critter_class_name) throws InvalidCritterException, ClassNotFoundException {
-			Class<?> c1 = Class.forName("assignment4.Craig");
-			if(c1.getName().equals(critter_class_name)) {
-				Critter crit = new Craig();
-				crit.x_coord = Params.world_width;
-				crit.y_coord = Params.world_height;
-				crit.energy = Params.start_energy;
-				population.add(crit);
+	public static void makeCritter(String critter_class_name) throws InvalidCritterException{
+			Class<?> c1,c2;
+			try {
+				c1 = Class.forName("assignment4.Animals");
+				c2 = Class.forName("assignment4.Algae");
+				if(c1.getName().equals(critter_class_name)) {
+					Critter crit = new Animals();
+					crit.x_coord = Params.world_width;
+					crit.y_coord = Params.world_height;
+					crit.energy = Params.start_energy;
+					population.add(crit);
+				}
+				else if(c2.getName().equals(critter_class_name)) {
+					Critter crit = new Algae();
+					crit.x_coord = Params.world_width;
+					crit.y_coord = Params.world_height;
+					crit.energy = Params.start_energy;
+					population.add(crit);
+				}
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
 			}
-			else if(c1.getName().equals(critter_class_name)) {
-				Critter crit = new Algae();
-				crit.x_coord = Params.world_width;
-				crit.y_coord = Params.world_height;
-				crit.energy = Params.start_energy;
-				population.add(crit);
-			}
-			
 	}
 	
 	/**
@@ -192,6 +220,9 @@ public abstract class Critter {
 	}
 	
 	public static void worldTimeStep() {
+		for(int i = 0;i<population.size();i++) {
+			population.get(i).doTimeStep();
+		}
 		// Complete this method.
 	}
 	
