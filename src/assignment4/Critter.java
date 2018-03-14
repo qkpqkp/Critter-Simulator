@@ -73,10 +73,34 @@ public abstract class Critter {
 					break;
 			default: break;
 		}
+		energy -= Params.walk_energy_cost;
 	}
 	
 	protected final void run(int direction) {
-		
+		switch(direction) {
+			case 0: x_coord+=2;
+					break;
+			case 1: x_coord+=2;
+					y_coord+=2;
+					break;
+			case 2: y_coord+=2;
+					break;
+			case 3: x_coord-=2;
+					y_coord+=2;
+					break;
+			case 4: x_coord-=2;
+					break;
+			case 5: x_coord-=2;
+					y_coord-=2;
+					break;
+			case 6: y_coord-=2;
+					break;
+			case 7: x_coord+=2;
+					y_coord-=2;
+					break;
+			default: break;
+		}
+		energy -= Params.run_energy_cost;
 	}
 	
 	protected final void reproduce(Critter offspring, int direction) {
