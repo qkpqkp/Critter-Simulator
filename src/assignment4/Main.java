@@ -70,7 +70,7 @@ public class Main {
 
         /* Do not alter the code above for your submission. */
         /* Write your code below. */
-        
+
         // System.out.println("GLHF");
         
         /* Write your code above */

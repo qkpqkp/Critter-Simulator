@@ -25,7 +25,7 @@ public abstract class Critter {
 	private static String myPackage;
 	private	static List<Critter> population = new java.util.ArrayList<Critter>();
 	private static List<Critter> babies = new java.util.ArrayList<Critter>();
-
+	protected boolean permit_to_move;
 	// Gets the package name.  This assumes that Critter and its subclasses are all in the same package.
 	static {
 		myPackage = Critter.class.getPackage().toString().split(" ")[1];
@@ -46,59 +46,65 @@ public abstract class Critter {
 	
 	private int energy = 0;
 	protected int getEnergy() { return energy; }
+	protected int getX() { return x_coord;}
+	protected int getY() { return y_coord;}
 	private int x_coord;
 	private int y_coord;
 	
 	protected final void walk(int direction) {
-		switch(direction) {
-			case 0: x_coord++;
-					break;
-			case 1: x_coord++;
-					y_coord++;
-					break;
-			case 2: y_coord++;
-					break;
-			case 3: x_coord--;
-					y_coord++;
-					break;
-			case 4: x_coord--;
-					break;
-			case 5: x_coord--;
-					y_coord--;
-					break;
-			case 6: y_coord--;
-					break;
-			case 7: x_coord++;
-					y_coord--;
-					break;
-			default: break;
+		if(permit_to_move==true) {
+			switch(direction) {
+				case 0: x_coord++;
+						break;
+				case 1: x_coord++;
+						y_coord++;
+						break;
+				case 2: y_coord++;
+						break;
+				case 3: x_coord--;
+						y_coord++;
+						break;
+				case 4: x_coord--;
+						break;
+				case 5: x_coord--;
+						y_coord--;
+						break;
+				case 6: y_coord--;
+						break;
+				case 7: x_coord++;
+						y_coord--;
+						break;
+				default: break;
+			}
 		}
 		energy -= Params.walk_energy_cost;
 	}
 	
 	protected final void run(int direction) {
-		switch(direction) {
-			case 0: x_coord+=2;
-					break;
-			case 1: x_coord+=2;
-					y_coord+=2;
-					break;
-			case 2: y_coord+=2;
-					break;
-			case 3: x_coord-=2;
-					y_coord+=2;
-					break;
-			case 4: x_coord-=2;
-					break;
-			case 5: x_coord-=2;
-					y_coord-=2;
-					break;
-			case 6: y_coord-=2;
-					break;
-			case 7: x_coord+=2;
-					y_coord-=2;
-					break;
-			default: break;
+		if(permit_to_move==true) {
+			switch(direction) {
+				case 0: x_coord+=2;
+						break;
+				case 1: x_coord+=2;
+						y_coord+=2;
+						break;
+				case 2: y_coord+=2;
+						break;
+				case 3: x_coord-=2;
+						y_coord+=2;
+						break;
+				case 4: x_coord-=2;
+						break;
+				case 5: x_coord-=2;
+						y_coord-=2;
+						break;
+				case 6: y_coord-=2;
+						break;
+				case 7: x_coord+=2;
+						y_coord-=2;
+						break;
+				default: break;
+			}
 		}
 		energy -= Params.run_energy_cost;
 	}
@@ -244,10 +250,60 @@ public abstract class Critter {
 	}
 	
 	public static void worldTimeStep() {
+		//Do time step
 		for(int i = 0;i<population.size();i++) {
 			population.get(i).doTimeStep();
+			if(population.get(i).getEnergy()<=0) {
+				population.remove(i);
+				i--;
+			}
 		}
-		// Complete this method.
+		//Check encountered,if two have same position
+		for(int j = 0; j < population.size();j++) {
+			for(int k = j+1; k < population.size();k++) {
+				if(population.get(j).x_coord==population.get(k).x_coord) {
+					if(population.get(j).y_coord==population.get(k).y_coord) {
+						//decide to fight or move
+						population.get(j).fight(population.get(k).toString());
+						population.get(k).fight(population.get(j).toString());
+						//Not enough energy, die
+						if(population.get(k).getEnergy()<=0) {
+							population.remove(k);
+							k--;
+							if(population.get(j).getEnergy()<=0) {
+								population.remove(j);
+								j--;
+								break;
+							}
+							continue;
+						}
+						if(population.get(j).getEnergy()<=0) {
+							population.remove(j);
+							j--;
+							break;
+						}
+						//Check if two are still in same position
+						if(population.get(j).x_coord==population.get(k).x_coord) {
+							if(population.get(j).y_coord==population.get(k).y_coord) {
+								int roll1 = getRandomInt(population.get(j).getEnergy());
+								int roll2 = getRandomInt(population.get(k).getEnergy());
+								if(roll1>=roll2) {
+									population.get(j).energy+=0.5*population.get(k).energy;
+									population.remove(k);
+									k--;
+								}
+								else{
+									population.get(k).energy+=0.5*population.get(j).energy;
+									population.remove(j);
+									j--;
+									break;
+								}
+							}
+						}	
+					}
+				}
+			}
+		}
 	}
 	
 	public static void displayWorld() {
