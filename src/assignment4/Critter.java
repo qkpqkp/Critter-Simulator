@@ -46,7 +46,6 @@ public abstract class Critter {
 	
 	private int energy = 0;
 	protected int getEnergy() { return energy; }
-	
 	private int x_coord;
 	private int y_coord;
 	
@@ -72,8 +71,25 @@ public abstract class Critter {
 	 * an Exception.)
 	 * @param critter_class_name
 	 * @throws InvalidCritterException
+	 * @throws ClassNotFoundException 
 	 */
-	public static void makeCritter(String critter_class_name) throws InvalidCritterException {
+	public static void makeCritter(String critter_class_name) throws InvalidCritterException, ClassNotFoundException {
+			Class<?> c1 = Class.forName("assignment4.Craig");
+			if(c1.getName().equals(critter_class_name)) {
+				Critter crit = new Craig();
+				crit.x_coord = Params.world_width;
+				crit.y_coord = Params.world_height;
+				crit.energy = Params.start_energy;
+				population.add(crit);
+			}
+			else if(c1.getName().equals(critter_class_name)) {
+				Critter crit = new Algae();
+				crit.x_coord = Params.world_width;
+				crit.y_coord = Params.world_height;
+				crit.energy = Params.start_energy;
+				population.add(crit);
+			}
+			
 	}
 	
 	/**
@@ -84,7 +100,11 @@ public abstract class Critter {
 	 */
 	public static List<Critter> getInstances(String critter_class_name) throws InvalidCritterException {
 		List<Critter> result = new java.util.ArrayList<Critter>();
-	
+		for(Critter c: population) {
+			if(c.getClass().getName().equalsIgnoreCase(critter_class_name)) {
+				result.add(c);
+			}
+		}
 		return result;
 	}
 	
