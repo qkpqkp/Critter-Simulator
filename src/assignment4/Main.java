@@ -70,11 +70,49 @@ public class Main {
 
         /* Do not alter the code above for your submission. */
         /* Write your code below. */
-
+        while(true) {
+        	System.out.println("critters>");
+        	String input = kb.next();
+        	int count = 1;
+        	if(input == "quit") {
+        		return;
+        	}
+        	else if(input == "show") {
+        		Critter.displayWorld();
+        	}
+        	else if(input == "step") {
+        		count = kb.nextInt();
+        		for(int i = 0; i < count; i ++) {
+        			Critter.worldTimeStep();
+        		}
+        	}
+        	else if(input == "seed") {
+        		count = kb.nextInt();
+        		Critter.setSeed(count);
+        	}
+        	else if(input == "make") {
+        		String name = kb.next();
+        		count = kb.nextInt();
+        		try {
+        			for(int i = 0; i < count;i++) {
+        				Critter.makeCritter(name);
+        			}
+        		} catch (InvalidCritterException e) {
+        			e.printStackTrace();
+        		}
+        	}
+        	else if(input == "stats") {
+        		String name = kb.next();
+        		try {
+        			Critter.runStats(Critter.getInstances(name));
+        		} catch (InvalidCritterException e) {
+        			e.printStackTrace();
+        		}
+        	}
+        	System.out.flush();
+        }
         // System.out.println("GLHF");
         
         /* Write your code above */
-        System.out.flush();
-
     }
 }
