@@ -12,9 +12,8 @@ package assignment4;
  * Fall 2016
  */
 
-
 import java.util.List;
-
+//test push
 /* see the PDF for descriptions of the methods and fields in this class
  * you may add fields, methods or inner classes to Critter ONLY if you make your additions private
  * no new public, protected or default-package code or data can be added to Critter
@@ -113,6 +112,39 @@ public abstract class Critter {
 	}
 	
 	protected final void reproduce(Critter offspring, int direction) {
+		if(energy < Params.min_reproduce_energy) {
+			return;
+		}
+		offspring.energy = (int)(energy * 0.5);
+		energy = (int)(energy * 0.5) + 1;
+		switch(direction) {
+		case 0: offspring.x_coord = x_coord++;
+				offspring.y_coord = y_coord;
+				break;
+		case 1: offspring.x_coord = x_coord++;
+				offspring.y_coord = y_coord++;
+				break;
+		case 2: offspring.x_coord = x_coord;
+				offspring.y_coord = y_coord++;
+				break;
+		case 3: offspring.x_coord = x_coord--;
+				offspring.y_coord = y_coord++;
+				break;
+		case 4: offspring.x_coord = x_coord--;
+				offspring.y_coord = y_coord;;
+				break;
+		case 5: offspring.x_coord = x_coord--;
+				offspring.y_coord = y_coord--;
+				break;
+		case 6: offspring.x_coord = x_coord;
+				offspring.y_coord = y_coord--;
+				break;
+		case 7: offspring.x_coord = x_coord++;
+				offspring.y_coord = y_coord--;
+				break;
+		default: break;
+		}
+		babies.add(offspring);
 	}
 
 	public abstract void doTimeStep();
@@ -261,8 +293,12 @@ public abstract class Critter {
 	}
 	
 	public static void worldTimeStep() {
-		int roll1, roll2;
-
+		int roll1=0, roll2=0;
+		//Add all babies to population
+		for(int l = 0; l < babies.size(); l++) {
+			population.add(babies.get(l));
+		}
+		babies.clear();
 		//Do time step
 		for(int i = 0;i<population.size();i++) {
 			population.get(i).doTimeStep();
@@ -283,7 +319,7 @@ public abstract class Critter {
 							roll1=0;
 						}
 						else{
-							roll1=(getRandomInt(population.get(j).getEnergy());
+							roll1=(getRandomInt(population.get(j).getEnergy()));
 						}
 
 						if (!population.get(k).fight(population.get(j).toString())){
@@ -292,7 +328,11 @@ public abstract class Critter {
 						else {
 							roll2=getRandomInt(population.get(k).getEnergy());
 						}
-
+					}
+				}
+				//Still need to check if they are still in the same position
+				if (population.get(j).x_coord == population.get(k).x_coord) {
+					if (population.get(j).y_coord == population.get(k).y_coord) {	
 						if (roll1>=roll2) {
 							population.get(j).energy += 0.5 * population.get(k).energy;
 							population.get(k).energy=0;
@@ -312,7 +352,6 @@ public abstract class Critter {
 								break;
 							}
 						}
-
 					}
 				}
 			}
