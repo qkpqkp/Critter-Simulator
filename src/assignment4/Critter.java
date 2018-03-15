@@ -127,26 +127,33 @@ public abstract class Critter {
 	 * @throws ClassNotFoundException 
 	 */
 	public static void makeCritter(String critter_class_name) throws InvalidCritterException{
-			Class<?> c1,c2;
+
 			try {
-				c1 = Class.forName("assignment4.Animals");
-				c2 = Class.forName("assignment4.Algae");
-				if(c1.getName().equals(critter_class_name)) {
-					Critter crit = new Animals();
+				Class c = Class.forName(critter_class_name);
+				Critter crit=(Critter) c.newInstance();
+
+
+				if(c.getName().equals(critter_class_name)) {
 					crit.x_coord = Params.world_width;
 					crit.y_coord = Params.world_height;
 					crit.energy = Params.start_energy;
 					population.add(crit);
 				}
-				else if(c2.getName().equals(critter_class_name)) {
-					Critter crit = new Algae();
-					crit.x_coord = Params.world_width;
-					crit.y_coord = Params.world_height;
-					crit.energy = Params.start_energy;
-					population.add(crit);
-				}
+
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
+				throw new InvalidCritterException(critter_class_name);
+
+			}
+			catch(InstantiationException e){
+
+				throw new InvalidCritterException(critter_class_name);
+			}
+
+			catch(IllegalAccessException e){
+
+				throw new InvalidCritterException(critter_class_name);
+
 			}
 	}
 	
