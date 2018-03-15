@@ -57,24 +57,60 @@ public abstract class Critter {
 		if(permit_to_move==true) {
 			switch(direction) {
 				case 0: x_coord++;
+					if (x_coord==Params.world_width){
+						x_coord=0;
+					}
 						break;
 				case 1: x_coord++;
-						y_coord++;
+						y_coord--;
+					if (x_coord==Params.world_width){
+						x_coord=0;
+					}
+					if (y_coord<0){
+						y_coord=Params.world_height-1;
+					}
 						break;
-				case 2: y_coord++;
+				case 2: y_coord--;
+					if (y_coord<0){
+						y_coord=Params.world_height-1;
+					}
 						break;
 				case 3: x_coord--;
-						y_coord++;
+						y_coord--;
+					if (x_coord<0){
+						x_coord=Params.world_width-1;
+					}
+					if (y_coord<0){
+						y_coord=Params.world_height-1;
+					}
 						break;
 				case 4: x_coord--;
+						if (x_coord<0){
+							x_coord=Params.world_width-1;
+						}
 						break;
 				case 5: x_coord--;
-						y_coord--;
+						y_coord++;
+					if (x_coord<0){
+						x_coord=Params.world_width-1;
+					}
+					if (y_coord==Params.world_height){
+						y_coord=0;
+					}
 						break;
-				case 6: y_coord--;
+				case 6: y_coord++;
+					if (y_coord==Params.world_height){
+						y_coord=0;
+					}
 						break;
 				case 7: x_coord++;
-						y_coord--;
+						y_coord++;
+					if (x_coord==Params.world_width){
+						x_coord=0;
+					}
+					if (y_coord==Params.world_height){
+						y_coord=0;
+					}
 						break;
 				default: break;
 			}
@@ -86,24 +122,60 @@ public abstract class Critter {
 		if(permit_to_move==true) {
 			switch(direction) {
 				case 0: x_coord+=2;
+					if (x_coord>=Params.world_width){
+						x_coord=x_coord-Params.world_width;
+					}
 						break;
 				case 1: x_coord+=2;
-						y_coord+=2;
+						y_coord-=2;
+					if (x_coord>=Params.world_width){
+						x_coord=x_coord-Params.world_width;
+					}
+					if (y_coord<0){
+						y_coord=y_coord+Params.world_height;
+					}
 						break;
-				case 2: y_coord+=2;
+				case 2: y_coord-=2;
+					if (y_coord<0){
+						y_coord=y_coord+Params.world_height;
+					}
 						break;
 				case 3: x_coord-=2;
-						y_coord+=2;
+						y_coord-=2;
+					if (x_coord<0){
+						x_coord=x_coord+Params.world_width;
+					}
+					if (y_coord<0){
+						y_coord=y_coord+Params.world_height;
+					}
 						break;
 				case 4: x_coord-=2;
+					if (x_coord<0){
+						x_coord=x_coord+Params.world_width;
+					}
 						break;
 				case 5: x_coord-=2;
-						y_coord-=2;
+						y_coord+=2;
+					if (x_coord<0){
+						x_coord=x_coord+Params.world_width;
+					}
+					if (y_coord>=Params.world_height){
+						y_coord=y_coord-Params.world_height;
+					}
 						break;
-				case 6: y_coord-=2;
+				case 6: y_coord+=2;
+					if (y_coord>=Params.world_height){
+						y_coord=y_coord-Params.world_height;
+					}
 						break;
 				case 7: x_coord+=2;
-						y_coord-=2;
+						y_coord+=2;
+					if (x_coord>=Params.world_width){
+						x_coord=x_coord-Params.world_width;
+					}
+					if (y_coord>=Params.world_height){
+						y_coord=y_coord-Params.world_height;
+					}
 						break;
 				default: break;
 			}
@@ -120,27 +192,63 @@ public abstract class Critter {
 		switch(direction) {
 		case 0: offspring.x_coord = x_coord++;
 				offspring.y_coord = y_coord;
+			if (offspring.x_coord==Params.world_width){
+				offspring.x_coord=0;
+			}
 				break;
 		case 1: offspring.x_coord = x_coord++;
-				offspring.y_coord = y_coord++;
+				offspring.y_coord = y_coord--;
+			if (offspring.x_coord==Params.world_width){
+				offspring.x_coord=0;
+			}
+			if (offspring.y_coord<0){
+				offspring.y_coord=Params.world_height-1;
+			}
 				break;
 		case 2: offspring.x_coord = x_coord;
-				offspring.y_coord = y_coord++;
+				offspring.y_coord = y_coord--;
+			if (offspring.y_coord<0){
+				offspring.y_coord=Params.world_height-1;
+			}
 				break;
 		case 3: offspring.x_coord = x_coord--;
-				offspring.y_coord = y_coord++;
+				offspring.y_coord = y_coord--;
+			if (offspring.x_coord<0){
+				offspring.x_coord=Params.world_width-1;
+			}
+			if (offspring.y_coord<0){
+				offspring.y_coord=Params.world_height-1;
+			}
 				break;
 		case 4: offspring.x_coord = x_coord--;
-				offspring.y_coord = y_coord;;
+				offspring.y_coord = y_coord;
+			if (offspring.x_coord<0){
+				offspring.x_coord=Params.world_width-1;
+			}
 				break;
 		case 5: offspring.x_coord = x_coord--;
 				offspring.y_coord = y_coord--;
+			if (offspring.x_coord<0){
+				offspring.x_coord=Params.world_width-1;
+			}
+			if (offspring.y_coord==Params.world_height){
+				offspring.y_coord=0;
+			}
 				break;
 		case 6: offspring.x_coord = x_coord;
 				offspring.y_coord = y_coord--;
+			if (offspring.y_coord==Params.world_height){
+				offspring.y_coord=0;
+			}
 				break;
 		case 7: offspring.x_coord = x_coord++;
 				offspring.y_coord = y_coord--;
+			if (offspring.x_coord==Params.world_width){
+				offspring.x_coord=0;
+			}
+			if (offspring.y_coord==Params.world_height){
+				offspring.y_coord=0;
+			}
 				break;
 		default: break;
 		}
