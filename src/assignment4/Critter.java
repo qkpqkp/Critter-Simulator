@@ -25,6 +25,9 @@ public abstract class Critter {
 	private static String myPackage;
 	private	static List<Critter> population = new java.util.ArrayList<Critter>();
 	private static List<Critter> babies = new java.util.ArrayList<Critter>();
+
+
+
 	protected boolean permit_to_move;
 	// Gets the package name.  This assumes that Critter and its subclasses are all in the same package.
 	static {
@@ -133,12 +136,13 @@ public abstract class Critter {
 				Critter crit=(Critter) c.newInstance();
 
 
-				if(c.getName().equals(critter_class_name)) {
-					crit.x_coord = Params.world_width;
-					crit.y_coord = Params.world_height;
+					crit.x_coord = getRandomInt(Params.world_width);
+					crit.y_coord = getRandomInt(Params.world_height);
 					crit.energy = Params.start_energy;
+
+
 					population.add(crit);
-				}
+
 
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
@@ -253,10 +257,12 @@ public abstract class Critter {
 	 * Clear the world of all critters, dead and alive
 	 */
 	public static void clearWorld() {
-		// Complete this method.
+		population.clear();
 	}
 	
 	public static void worldTimeStep() {
+		int roll1, roll2;
+
 		//Do time step
 		for(int i = 0;i<population.size();i++) {
 			population.get(i).doTimeStep();
@@ -265,54 +271,54 @@ public abstract class Critter {
 				i--;
 			}
 		}
+
 		//Check encountered,if two have same position
 		for(int j = 0; j < population.size();j++) {
-			for(int k = j+1; k < population.size();k++) {
-				if(population.get(j).x_coord==population.get(k).x_coord) {
-					if(population.get(j).y_coord==population.get(k).y_coord) {
+			for (int k = j + 1; k < population.size(); k++) {
+				if (population.get(j).x_coord == population.get(k).x_coord) {
+					if (population.get(j).y_coord == population.get(k).y_coord) {
 						//decide to fight or move
-						population.get(j).fight(population.get(k).toString());
-						population.get(k).fight(population.get(j).toString());
+
+						if (!population.get(j).fight(population.get(k).toString())){
+							roll1=0;
+						}
+						else{
+							roll1=(getRandomInt(population.get(j).getEnergy());
+						}
+
+						if (!population.get(k).fight(population.get(j).toString())){
+							roll2=0;
+						}
+						else {
+							roll2=getRandomInt(population.get(k).getEnergy());
+						}
+
+						if (roll1>=roll2) {
+							population.get(j).energy += 0.5 * population.get(k).energy;
+							population.get(k).energy=0;
+						}
+						else {
+							population.get(k).energy+=0.5*population.get(j).energy;
+							population.get(j).energy=0;
+
+						}
 						//Not enough energy, die
-						if(population.get(k).getEnergy()<=0) {
+						if (population.get(k).getEnergy() <= 0) {
 							population.remove(k);
 							k--;
-							if(population.get(j).getEnergy()<=0) {
+							if (population.get(j).getEnergy() <= 0) {
 								population.remove(j);
 								j--;
 								break;
 							}
-							continue;
 						}
-						if(population.get(j).getEnergy()<=0) {
-							population.remove(j);
-							j--;
-							break;
-						}
-						//Check if two are still in same position
-						if(population.get(j).x_coord==population.get(k).x_coord) {
-							if(population.get(j).y_coord==population.get(k).y_coord) {
-								int roll1 = getRandomInt(population.get(j).getEnergy());
-								int roll2 = getRandomInt(population.get(k).getEnergy());
-								if(roll1>=roll2) {
-									population.get(j).energy+=0.5*population.get(k).energy;
-									population.remove(k);
-									k--;
-								}
-								else{
-									population.get(k).energy+=0.5*population.get(j).energy;
-									population.remove(j);
-									j--;
-									break;
-								}
-							}
-						}	
+
 					}
 				}
 			}
 		}
 	}
-	
+
 	public static void displayWorld() {
 		// Complete this method.
 	}
