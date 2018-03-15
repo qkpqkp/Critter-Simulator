@@ -44,7 +44,7 @@ public abstract class Critter {
 	
 	
 	/* a one-character long string that visually depicts your critter in the ASCII interface */
-	public String toString() { return ""; }
+	public abstract String toString();
 	
 	private int energy = 0;
 	protected int getEnergy() { return energy; }
@@ -359,6 +359,20 @@ public abstract class Critter {
 	}
 
 	public static void displayWorld() {
-		// Complete this method.
+		Critter[][] world = new Critter[Params.world_width][Params.world_height];
+		for(int i = 0; i < population.size();i++) {
+			world[population.get(i).getX()][population.get(i).getY()] = population.get(i);
+		}
+		for(int j = 0; j < Params.world_height; j++) {
+			for(int k = 0; k < Params.world_width; k++) {
+				if(world[k][j]==null) {
+					System.out.print(" ");
+				}
+				else {
+					System.out.print(world[k][j].toString());
+				}
+			}
+			System.out.println("");
+		}
 	}
 }
