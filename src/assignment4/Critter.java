@@ -467,14 +467,25 @@ public abstract class Critter {
 	}
 
 	public static void displayWorld() {
-		Critter[][] world = new Critter[Params.world_width][Params.world_height];
+		Critter[][] world = new Critter[Params.world_width+2][Params.world_height+2];
 		for(int i = 0; i < population.size();i++) {
-			world[population.get(i).getX()][population.get(i).getY()] = population.get(i);
+			world[population.get(i).getX()+1][population.get(i).getY()+1] = population.get(i);
 		}
-		for(int j = 0; j < Params.world_height; j++) {
-			for(int k = 0; k < Params.world_width; k++) {
+		for(int j = 0; j < Params.world_height+2; j++) {
+			for(int k = 0; k < Params.world_width+2; k++) {
 				if(world[k][j]==null) {
+					if((j==0&&k==0)||(j==0&&k==Params.world_width+1)||(j==Params.world_height+1)&&(k==0)||(j==Params.world_height+1)&&(k==Params.world_width+1)) {
+						System.out.print("+");
+					}
+					else if(j==0||j==Params.world_height+1) {
+						System.out.print("-");
+					}
+					else if(k==0||k==Params.world_width+1) {
+						System.out.print("|");
+					}
+					else {
 					System.out.print(" ");
+					}
 				}
 				else {
 					System.out.print(world[k][j].toString());
