@@ -74,23 +74,23 @@ public class Main {
         	System.out.println("critters>");
         	String input = kb.next();
         	int count = 1;
-        	if(input == "quit") {
+        	if(input .equals("quit")) {
         		return;
         	}
-        	else if(input == "show") {
+        	else if(input.equals("show")) {
         		Critter.displayWorld();
         	}
-        	else if(input == "step") {
+        	else if(input.equals("step")) {
         		count = kb.nextInt();
         		for(int i = 0; i < count; i ++) {
         			Critter.worldTimeStep();
         		}
         	}
-        	else if(input == "seed") {
+        	else if(input.equals("seed")) {
         		count = kb.nextInt();
         		Critter.setSeed(count);
         	}
-        	else if(input == "make") {
+        	else if(input.equals("make")) {
         		String name = kb.next();
         		count = kb.nextInt();
         		try {
@@ -101,7 +101,7 @@ public class Main {
         			e.printStackTrace();
         		}
         	}
-        	else if(input == "stats") {
+        	else if(input.equals("stats")) {
         		String name = kb.next();
         		try {
         			Critter.runStats(Critter.getInstances(name));

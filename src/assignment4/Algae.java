@@ -17,7 +17,7 @@ public class Algae extends TestCritter {
 		dir = Critter.getRandomInt(8);
 		permit_to_move = true;
 	}
-	public String toString() { return "Algae"; }
+	@Override public String toString() { return "@"; }
 	
 	
 	public boolean fight(String enemy) { 
@@ -94,6 +94,22 @@ public class Algae extends TestCritter {
 		permit_to_move = true;
 		walk(dir);
 		permit_to_move = false;
+		
+		if(getEnergy()>=30) {
+			Algae child = new Algae();
+			for (int k = 0; k < 8; k += 1) {
+				child.genes[k] = this.genes[k];
+			}
+			int g = Critter.getRandomInt(8);
+			while (child.genes[g] == 0) {
+				g = Critter.getRandomInt(8);
+			}
+			child.genes[g] -= 1;
+			g = Critter.getRandomInt(8);
+			child.genes[g] += 1;
+			reproduce(child, Critter.getRandomInt(8));
+		}
+		
 		int roll = Critter.getRandomInt(GENE_TOTAL);
 		int turn = 0;
 		while (genes[turn] <= roll) {

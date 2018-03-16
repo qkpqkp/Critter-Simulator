@@ -11,7 +11,7 @@ public class Animals extends TestCritter {
 			}
 			dir = Critter.getRandomInt(8);
 		}
-		public String toString() { return "Anmials"; }
+		public String toString() { return "A"; }
 		
 		public boolean fight(String not_used) { return false; }
 		
