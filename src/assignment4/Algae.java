@@ -21,72 +21,7 @@ public class Algae extends TestCritter {
 	
 	
 	public boolean fight(String enemy) { 
-			int roll1 = Critter.getRandomInt(GENE_TOTAL);
-			//decide to walk away
-			if(roll1<=6) {
-				walk(dir);
-				//Other critters are in this position
-				for(int i = 0 ;i < getPopulation().size();i++) {
-					if(super.getX_coord()==getPopulation().get(i).getX()) {
-						if(dir<4) {
-							dir+=4;
-							walk(dir);
-							super.setEnergy(super.getEnergy()+Params.walk_energy_cost);
-						}
-						else if(dir>=4) {
-							dir-=4;
-							walk(dir);
-							super.setEnergy(super.getEnergy()+Params.walk_energy_cost);
-						}
-					}
-				}
-				permit_to_move = false;
-				//change direction
-				int roll2 = Critter.getRandomInt(GENE_TOTAL);
-				int turn = 0;
-				while (genes[turn] <= roll2) {
-					roll2 = roll2 - genes[turn];
-					turn = turn + 1;
-				}
-				assert(turn < 8);
-				
-				dir = (dir + turn) % 8;
-				return false;
-			}
-			//decide to run
-			else if(roll1>6&&roll1<=12){
-				run(dir);
-				//other critters are in this position
-				for(int i = 0 ;i < getPopulation().size();i++) {
-					if(super.getX_coord()==getPopulation().get(i).getX()) {
-						if(dir<4) {
-							dir+=4;
-							run(dir);
-							super.setEnergy(super.getEnergy()+Params.run_energy_cost);
-						}
-						else if(dir>=4) {
-							dir-=4;
-							run(dir);
-							super.setEnergy(super.getEnergy()+Params.run_energy_cost);
-						}
-					}
-				}
-				permit_to_move = false;
-				//change direction
-				int roll2 = Critter.getRandomInt(GENE_TOTAL);
-				int turn = 0;
-				while (genes[turn] <= roll2) {
-					roll2 = roll2 - genes[turn];
-					turn = turn + 1;
-				}
-				assert(turn < 8);
-				
-				dir = (dir + turn) % 8;
-				return false;
-			}
-			else {
-				return true;
-			}
+			return false;
 	}
 	
 	public void doTimeStep() {

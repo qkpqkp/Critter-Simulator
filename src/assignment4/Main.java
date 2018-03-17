@@ -76,27 +76,37 @@ public class Main {
         	System.out.println("critters>");
         	String input = kb.next();
         	int count = 1;
-        	if(input .equals("quit")) {
+        	if(input.equals("quit")) {
         		return;
         	}
         	else if(input.equals("show")) {
         		Critter.displayWorld();
         	}
-        	else if(input.equals("step")) {
-        		count = kb.nextInt();
-        		for(int i = 0; i < count; i ++) {
-        			Critter.worldTimeStep();
+        	else if(input.equals("step")) {	
+        		String name = kb.nextLine();
+        		if(name.length()!=0) {
+        			name = name.substring(1);
         		}
+				String delims="[ ]+";
+				String[] token=name.split(delims);
+				ArrayList<String> a=new ArrayList<>(Arrays.asList(token));
+				if (a.size()<2){
+					a.add(Integer.toString(1));
+				}
+				count=Integer.parseInt(a.get(1));
+				name=a.get(0);
+        		for(int i = 0; i < count;i++) {
+					Critter.worldTimeStep();
+				}
         	}
         	else if(input.equals("seed")) {
         		count = kb.nextInt();
         		Critter.setSeed(count);
         	}
         	else if(input.equals("make")) {
-				Scanner kb=new Scanner(System.in);
-				String name=kb.nextLine();
+				String name = kb.nextLine();
+				name = name.substring(1);
 				String delims="[ ]+";
-
 				String[] token=name.split(delims);
 				ArrayList<String> a=new ArrayList<>(Arrays.asList(token));
 				if (a.size()<2){

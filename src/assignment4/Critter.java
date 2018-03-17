@@ -189,69 +189,8 @@ public abstract class Critter {
 		}
 		offspring.energy = (int)(energy * 0.5);
 		energy = (int)(energy * 0.5) + 1;
-		switch(direction) {
-		case 0: offspring.x_coord = x_coord++;
-				offspring.y_coord = y_coord;
-			if (offspring.x_coord==Params.world_width){
-				offspring.x_coord=0;
-			}
-				break;
-		case 1: offspring.x_coord = x_coord++;
-				offspring.y_coord = y_coord--;
-			if (offspring.x_coord==Params.world_width){
-				offspring.x_coord=0;
-			}
-			if (offspring.y_coord<0){
-				offspring.y_coord=Params.world_height-1;
-			}
-				break;
-		case 2: offspring.x_coord = x_coord;
-				offspring.y_coord = y_coord--;
-			if (offspring.y_coord<0){
-				offspring.y_coord=Params.world_height-1;
-			}
-				break;
-		case 3: offspring.x_coord = x_coord--;
-				offspring.y_coord = y_coord--;
-			if (offspring.x_coord<0){
-				offspring.x_coord=Params.world_width-1;
-			}
-			if (offspring.y_coord<0){
-				offspring.y_coord=Params.world_height-1;
-			}
-				break;
-		case 4: offspring.x_coord = x_coord--;
-				offspring.y_coord = y_coord;
-			if (offspring.x_coord<0){
-				offspring.x_coord=Params.world_width-1;
-			}
-				break;
-		case 5: offspring.x_coord = x_coord--;
-				offspring.y_coord = y_coord--;
-			if (offspring.x_coord<0){
-				offspring.x_coord=Params.world_width-1;
-			}
-			if (offspring.y_coord==Params.world_height){
-				offspring.y_coord=0;
-			}
-				break;
-		case 6: offspring.x_coord = x_coord;
-				offspring.y_coord = y_coord--;
-			if (offspring.y_coord==Params.world_height){
-				offspring.y_coord=0;
-			}
-				break;
-		case 7: offspring.x_coord = x_coord++;
-				offspring.y_coord = y_coord--;
-			if (offspring.x_coord==Params.world_width){
-				offspring.x_coord=0;
-			}
-			if (offspring.y_coord==Params.world_height){
-				offspring.y_coord=0;
-			}
-				break;
-		default: break;
-		}
+		walk(direction);
+		energy += Params.walk_energy_cost ;
 		babies.add(offspring);
 	}
 
@@ -454,14 +393,21 @@ public abstract class Critter {
 						if (population.get(k).getEnergy() <= 0) {
 							population.remove(k);
 							k--;
-							if (population.get(j).getEnergy() <= 0) {
-								population.remove(j);
-								j--;
-								break;
-							}
+						}
+						if (population.get(j).getEnergy() <= 0) {
+							population.remove(j);
+							j--;
+							break;
 						}
 					}
 				}
+			}
+		}
+		for(int i = 0; i < Params.refresh_algae_count;i++) {
+			try {
+				makeCritter("Algae");
+			} catch (InvalidCritterException e) {
+				e.printStackTrace();
 			}
 		}
 	}
