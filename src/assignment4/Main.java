@@ -12,6 +12,8 @@ package assignment4;
  * Fall 2016
  */
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.io.*;
 
@@ -91,8 +93,17 @@ public class Main {
         		Critter.setSeed(count);
         	}
         	else if(input.equals("make")) {
-        		String name = kb.next();
-        		count = kb.nextInt();
+				Scanner kb=new Scanner(System.in);
+				String name=kb.nextLine();
+				String delims="[ ]+";
+
+				String[] token=name.split(delims);
+				ArrayList<String> a=new ArrayList<>(Arrays.asList(token));
+				if (a.size()<2){
+					a.add(Integer.toString(1));
+				}
+				count=Integer.parseInt(a.get(1));
+
         		try {
         			for(int i = 0; i < count;i++) {
         				Critter.makeCritter(name);
