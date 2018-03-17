@@ -103,7 +103,7 @@ public class Main {
 					a.add(Integer.toString(1));
 				}
 				count=Integer.parseInt(a.get(1));
-
+				name=a.get(0);
         		try {
         			for(int i = 0; i < count;i++) {
         				Critter.makeCritter(name);
