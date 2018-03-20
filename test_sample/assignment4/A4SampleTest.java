@@ -142,7 +142,6 @@ public class A4SampleTest{
 	/*
 	 * 10. showEmptyWorld
 	 */
-	
 	@Test
 	public void showEmptyWorld(){
 		
@@ -184,7 +183,6 @@ public class A4SampleTest{
 		
 		
 	}
-	
 
 	/*
 	 * 1. ParseMakeLargeCritter
@@ -237,6 +235,5 @@ public class A4SampleTest{
 		
 		return input;
 	}
-	
 	
 }

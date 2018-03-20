@@ -1,5 +1,6 @@
 package assignment4;
 
+
 /*
  * Do not change or submit this file.
  */
@@ -23,7 +24,9 @@ public class Algae extends TestCritter {
 	public boolean fight(String enemy) { 
 			return false;
 	}
-	
+	public static void TestMethod(String a) {
+		return;
+	}
 	public void doTimeStep() {
 		setEnergy(getEnergy() + Params.photosynthesis_energy_amount);
 		permit_to_move = true;
@@ -54,5 +57,24 @@ public class Algae extends TestCritter {
 		assert(turn < 8);
 		
 		dir = (dir + turn) % 8;
+	}
+	public static void runStats(java.util.List<Critter> algaes) {
+		int total_straight = 0;
+		int total_left = 0;
+		int total_right = 0;
+		int total_back = 0;
+		for (Object obj : algaes) {
+			Algae c = (Algae) obj;
+			total_straight += c.genes[0];
+			total_right += c.genes[1] + c.genes[2] + c.genes[3];
+			total_back += c.genes[4];
+			total_left += c.genes[5] + c.genes[6] + c.genes[7];
+		}
+		System.out.print("" + algaes.size() + " total Algaes    ");
+		System.out.print("" + total_straight / (GENE_TOTAL * 0.01 * algaes.size()) + "% straight   ");
+		System.out.print("" + total_back / (GENE_TOTAL * 0.01 * algaes.size()) + "% back   ");
+		System.out.print("" + total_right / (GENE_TOTAL * 0.01 * algaes.size()) + "% right   ");
+		System.out.print("" + total_left / (GENE_TOTAL * 0.01 * algaes.size()) + "% left   ");
+		System.out.println();
 	}
 }
