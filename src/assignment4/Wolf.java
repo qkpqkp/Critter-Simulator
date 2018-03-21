@@ -4,17 +4,17 @@ import assignment4.Critter.TestCritter;
 
 public class Wolf extends TestCritter {
 	private static final int GENE_TOTAL = 40;
-	private int[] genes = new int[8];
-	private int dir;
+    private int[] genes = new int[8];
+    private int dir;
 
-	public Wolf() {
-		for (int k = 0; k < 8; k += 1) {
-			genes[k] = GENE_TOTAL / 8;
-		}
-		dir = Critter.getRandomInt(8);
-		permit_to_move = true;
-	}
-	@Override public String toString() { return "W"; }
+    public Wolf() {
+        for (int k = 0; k < 8; k += 1) {
+            genes[k] = GENE_TOTAL / 8;
+        }
+        dir = Critter.getRandomInt(8);
+        permit_to_move = true;
+    }
+    @Override public String toString() { return "W"; }
 
 
  public boolean fight(String enemy) {

@@ -5,7 +5,7 @@ import assignment4.Critter.TestCritter;
 //does not reproduce, only runs
 
 public class Turtle extends TestCritter{
-    private static final int GENE_TOTAL = 47;
+    private static final int GENE_TOTAL = 72;
     private int[] genes = new int[8];
     private int dir;
 
@@ -44,6 +44,7 @@ public class Turtle extends TestCritter{
                 }
             }
             permit_to_move = false;
+
             int roll = Critter.getRandomInt(GENE_TOTAL);
             int turn = 0;
             while (genes[turn] <= roll) {
