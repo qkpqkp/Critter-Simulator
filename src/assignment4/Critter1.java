@@ -1,12 +1,18 @@
 package assignment4;
 
 import assignment4.Critter.TestCritter;
-
+/**
+ * 
+ * @author Kunpeng Qin
+ *
+ */
 public class Critter1 extends TestCritter {
 	private static final int GENE_TOTAL = 32;
 	private int[] genes = new int[8];
 	private int dir;	
-	
+	/**
+	 * Constructor of Critter1
+	 */
 	public Critter1() {
 		for (int k = 0; k < 8; k += 1) {
 			genes[k] = GENE_TOTAL / 8;
@@ -14,11 +20,23 @@ public class Critter1 extends TestCritter {
 		dir = Critter.getRandomInt(8);
 		permit_to_move = true;
 	}
-	@Override public String toString() { return "1"; }
+	/**
+	 * return the representation of this critter
+	 */
+	@Override 
+	public String toString() { return "1"; }
 	
-	
+	/**
+	 * Decide fight or not, if not, try run or walk away
+	 * @return Decide to fight or not
+	 * @param Enemy critter
+	 */
 	public boolean fight(String enemy) { 
 			int roll1 = Critter.getRandomInt(GENE_TOTAL);
+			
+			if(enemy.equals("Algae")) {
+				return true;
+			}
 			//decide to walk away
 			if(roll1<=6) {
 				walk(dir);
@@ -85,7 +103,9 @@ public class Critter1 extends TestCritter {
 				return true;
 			}
 	}
-	
+	/**
+	 * Walk, run or reproduce during each time step
+	 */
 	public void doTimeStep() {
 		setEnergy(getEnergy() + Params.photosynthesis_energy_amount);
 		permit_to_move = true;
