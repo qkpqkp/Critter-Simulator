@@ -4,12 +4,15 @@ import assignment4.Critter.TestCritter;
 
 //does not reproduce, only runs
 
-public class Turtle extends TestCritter{
+public class Critter4 extends TestCritter{
     private static final int GENE_TOTAL = 72;
     private int[] genes = new int[8];
     private int dir;
 
-    public Turtle() {
+    /**
+     * Constructor of Critter1
+     */
+    public Critter4() {
         for (int k = 0; k < 8; k += 1) {
             genes[k] = GENE_TOTAL / 8;
         }
@@ -17,8 +20,18 @@ public class Turtle extends TestCritter{
         dir = Critter.getRandomInt(8);
         permit_to_move = true;
     }
-    @Override public String toString() { return "T"; }
+    /**
+     * return the representation of this critter
+     */
+    @Override
+    public String toString() { return "4"; }
 
+    /**
+     *
+     * @param enemy the critter currently at the same position on board as this critter
+     * @return True if this critter fought the critter passed in, false if this critter ran away
+     * This critter only has the ability to run left, it cannot fight.
+     */
     public boolean fight(String enemy) {
         if (dir==2 || dir==6 || dir==4){
             dir=0;
@@ -61,6 +74,9 @@ public class Turtle extends TestCritter{
         return true;
     }
 
+    /**
+     *Critter does not reproduce, only walks in given direction, and changes its direction
+     */
     public void doTimeStep() {
        setEnergy(getEnergy() + Params.photosynthesis_energy_amount);
         permit_to_move = true;

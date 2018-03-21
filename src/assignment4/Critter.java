@@ -34,6 +34,12 @@ public abstract class Critter {
 	}
 	
 	private static java.util.Random rand = new java.util.Random();
+
+    /**
+     *
+     * @param max is largest number in range of random numbs
+     * @return random number in range of 0 and max
+     */
 	public static int getRandomInt(int max) {
 		return rand.nextInt(max);
 	}
@@ -52,7 +58,12 @@ public abstract class Critter {
 	protected int getY() { return y_coord;}
 	private int x_coord;
 	private int y_coord;
-	
+
+    /**
+     * walks one step in specified direction
+     * @param direction is an int between 0 and 7
+     *
+     */
 	protected final void walk(int direction) {
 		if(permit_to_move==true) {
 			switch(direction) {
@@ -117,7 +128,11 @@ public abstract class Critter {
 		}
 		energy -= Params.walk_energy_cost;
 	}
-	
+
+    /**
+     * walks one step in specified direction
+     * @param direction is an int between 0 and 7
+     */
 	protected final void run(int direction) {
 		if(permit_to_move==true) {
 			switch(direction) {
@@ -182,7 +197,13 @@ public abstract class Critter {
 		}
 		energy -= Params.run_energy_cost;
 	}
-	
+
+    /**
+     *
+     * @param offspring offspring created in individual Critter subclass
+     * @param direction gives a direction for offspring to walk in that time step
+     * Offspring is reduced energy due to walking and is added to list of babies
+     */
 	protected final void reproduce(Critter offspring, int direction) {
 		if(energy < Params.min_reproduce_energy) {
 			return;
@@ -204,9 +225,9 @@ public abstract class Critter {
 	 * (Java weirdness: Exception throwing does not work properly if the parameter has lower-case instead of
 	 * upper. For example, if craig is supplied instead of Craig, an error is thrown instead of
 	 * an Exception.)
-	 * @param critter_class_name
-	 * @throws InvalidCritterException
-	 * @throws ClassNotFoundException 
+	 * @param critter_class_name a name of a critter class, input by user
+	 * @throws InvalidCritterException if an invalid class name is input
+	 * @throws ClassNotFoundException if an invalid class name is input
 	 */
 	public static void makeCritter(String critter_class_name) throws InvalidCritterException{
 
@@ -337,7 +358,13 @@ public abstract class Critter {
 	public static void clearWorld() {
 		population.clear();
 	}
-	
+
+    /**
+     * Controls "time step" for the entire board. Every critter on the board in each step will carry out
+     * what their subclass specifies in the time of their time step. Resolves all issues between critters
+     * at the same position on the board at each time step. At the end of time step, there is only one critter
+     * at each position.
+     */
 	public static void worldTimeStep() {
 		int roll1=0, roll2=0;
 		//Add all babies to population
@@ -411,6 +438,10 @@ public abstract class Critter {
 			}
 		}
 	}
+
+    /**
+     * Displays the current board when "show" is inputted
+     */
 
 	public static void displayWorld() {
 		Critter[][] world = new Critter[Params.world_width+2][Params.world_height+2];
