@@ -3,7 +3,7 @@ package assignment4;
 import assignment4.Critter.TestCritter;
 
 public class Critter2 extends TestCritter {
-	private static final int GENE_TOTAL = 40;
+	private static final int GENE_TOTAL = 32;
     private int[] genes = new int[8];
     private int dir;
     /**
@@ -26,12 +26,12 @@ public class Critter2 extends TestCritter {
 	 * Decide fight or not, if not, try run or walk away
 	 * @return Decide to fight or not
 	 * @param Enemy critter
+	 * The critter tends not to fight, if it try to escape, it has more chance to walk away
 	 */
     public boolean fight(String enemy) {
 		int roll1 = Critter.getRandomInt(GENE_TOTAL);
 		roll1 = 20;
 		//decide to walk away
-		int jack = 0;
 		if(roll1<=16) {
 			walk(dir);
 			//Other critters are in this position
@@ -96,14 +96,13 @@ public class Critter2 extends TestCritter {
 	}
     /**
 	 * Walk, run or reproduce during each time step
+	 * The critter will not move unless it encounters another critter.
+	 * It will reproduce once it has certain amount of energy
 	 */
 	public void doTimeStep() {
 		setEnergy(getEnergy() + Params.photosynthesis_energy_amount);
 		permit_to_move = true;
-		walk(dir);
-		permit_to_move = false;
-
-		if(getEnergy()>=80) {
+		if(getEnergy() >= 50) {
 			Critter2 child = new Critter2();
 			for (int k = 0; k < 8; k += 1) {
 				child.genes[k] = this.genes[k];

@@ -7,7 +7,7 @@ import assignment4.Critter.TestCritter;
  *
  */
 public class Critter1 extends TestCritter {
-	private static final int GENE_TOTAL = 32;
+	private static final int GENE_TOTAL = 48;
 	private int[] genes = new int[8];
 	private int dir;	
 	/**
@@ -30,6 +30,7 @@ public class Critter1 extends TestCritter {
 	 * Decide fight or not, if not, try run or walk away
 	 * @return Decide to fight or not
 	 * @param Enemy critter
+	 * The Critter largely tends to fight instead of escape
 	 */
 	public boolean fight(String enemy) { 
 			int roll1 = Critter.getRandomInt(GENE_TOTAL);
@@ -105,6 +106,7 @@ public class Critter1 extends TestCritter {
 	}
 	/**
 	 * Walk, run or reproduce during each time step
+	 * The Critter needs to walk every time step, it will reproduce as long as it can after moving even if it will die
 	 */
 	public void doTimeStep() {
 		setEnergy(getEnergy() + Params.photosynthesis_energy_amount);
@@ -112,7 +114,7 @@ public class Critter1 extends TestCritter {
 		walk(dir);
 		permit_to_move = false;
 		
-		if(getEnergy()>=80) {
+		if(getEnergy() >= Params.min_reproduce_energy) {
 			Critter1 child = new Critter1();
 			for (int k = 0; k < 8; k += 1) {
 				child.genes[k] = this.genes[k];

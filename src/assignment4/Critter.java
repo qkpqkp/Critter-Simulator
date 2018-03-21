@@ -381,7 +381,6 @@ public abstract class Critter {
 				i--;
 			}
 		}
-
 		//Check encountered,if two have same position
 		for(int j = 0; j < population.size();j++) {
 			for (int k = j + 1; k < population.size(); k++) {
@@ -393,20 +392,34 @@ public abstract class Critter {
 							roll1=0;
 						}
 						else{
-							roll1=(getRandomInt(population.get(j).getEnergy()));
+							if(population.get(j).getEnergy()>0) {
+								roll1=(getRandomInt(population.get(j).getEnergy()));
+							}
 						}
-
 						if (!population.get(k).fight(population.get(j).toString())){
 							roll2=0;
 						}
 						else {
-							roll2=getRandomInt(population.get(k).getEnergy());
+							if(population.get(k).getEnergy()>0) {
+								roll2=getRandomInt(population.get(k).getEnergy());
+							}
 						}
 					}
 				}
 				//Still need to check if they are still in the same position
 				if (population.get(j).x_coord == population.get(k).x_coord) {
 					if (population.get(j).y_coord == population.get(k).y_coord) {	
+						//Not enough energy, die
+						if (population.get(k).getEnergy() <= 0) {
+							population.remove(k);
+							k--;
+							if (population.get(j).getEnergy() <= 0) {
+								population.remove(j);
+								j--;
+								continue;
+							}
+							continue;
+						}
 						if (roll1>=roll2) {
 							population.get(j).energy += 0.5 * population.get(k).energy;
 							population.get(k).energy=0;
@@ -415,16 +428,6 @@ public abstract class Critter {
 							population.get(k).energy+=0.5*population.get(j).energy;
 							population.get(j).energy=0;
 
-						}
-						//Not enough energy, die
-						if (population.get(k).getEnergy() <= 0) {
-							population.remove(k);
-							k--;
-						}
-						if (population.get(j).getEnergy() <= 0) {
-							population.remove(j);
-							j--;
-							break;
 						}
 					}
 				}
