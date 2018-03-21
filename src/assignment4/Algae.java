@@ -33,7 +33,7 @@ public class Algae extends TestCritter {
 		walk(dir);
 		permit_to_move = false;
 		
-		if(getEnergy()>=30) {
+		if(getEnergy()>=80) {
 			Algae child = new Algae();
 			for (int k = 0; k < 8; k += 1) {
 				child.genes[k] = this.genes[k];

@@ -2,19 +2,19 @@ package assignment4;
 
 import assignment4.Critter.TestCritter;
 
-public class Wolf extends TestCritter {
+public class Critter2 extends TestCritter {
 	private static final int GENE_TOTAL = 40;
     private int[] genes = new int[8];
     private int dir;
 
-    public Wolf() {
+    public Critter2() {
         for (int k = 0; k < 8; k += 1) {
             genes[k] = GENE_TOTAL / 8;
         }
         dir = Critter.getRandomInt(8);
         permit_to_move = true;
     }
-    @Override public String toString() { return "W"; }
+    @Override public String toString() { return "2"; }
 
 
  public boolean fight(String enemy) {
@@ -95,7 +95,7 @@ public class Wolf extends TestCritter {
 		permit_to_move = false;
 
 		if(getEnergy()>=80) {
-			Wolf child = new Wolf();
+			Critter2 child = new Critter2();
 			for (int k = 0; k < 8; k += 1) {
 				child.genes[k] = this.genes[k];
 			}

@@ -50,7 +50,6 @@ public abstract class Critter {
 	protected int getEnergy() { return energy; }
 	protected int getX() { return x_coord;}
 	protected int getY() { return y_coord;}
-	protected void setEnergy(int e) {energy = e;}
 	private int x_coord;
 	private int y_coord;
 	
@@ -349,7 +348,7 @@ public abstract class Critter {
 		//Do time step
 		for(int i = 0;i<population.size();i++) {
 			population.get(i).doTimeStep();
-			population.get(i).setEnergy(population.get(i).getEnergy() - Params.rest_energy_cost);
+			population.get(i).energy = (population.get(i).getEnergy() - Params.rest_energy_cost);
 			if(population.get(i).getEnergy()<=0) {
 				population.remove(i);
 				i--;
