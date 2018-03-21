@@ -50,6 +50,7 @@ public abstract class Critter {
 	protected int getEnergy() { return energy; }
 	protected int getX() { return x_coord;}
 	protected int getY() { return y_coord;}
+	protected void setEnergy(int e) {energy = e;}
 	private int x_coord;
 	private int y_coord;
 	
@@ -218,13 +219,12 @@ public abstract class Critter {
 					crit.x_coord = getRandomInt(Params.world_width);
 					crit.y_coord = getRandomInt(Params.world_height);
 					crit.energy = Params.start_energy;
-
+					crit.permit_to_move = true;
 
 					population.add(crit);
 
 
 			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
 				throw new InvalidCritterException(critter_class_name);
 
 			}
@@ -349,6 +349,7 @@ public abstract class Critter {
 		//Do time step
 		for(int i = 0;i<population.size();i++) {
 			population.get(i).doTimeStep();
+			population.get(i).setEnergy(population.get(i).getEnergy() - Params.rest_energy_cost);
 			if(population.get(i).getEnergy()<=0) {
 				population.remove(i);
 				i--;

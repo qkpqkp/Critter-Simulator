@@ -129,7 +129,7 @@ public class Main {
         	else if(input.equals("seed")) {
         		String name = kb.nextLine();
         		try {
-        			count = Integer.parseInt(name);
+        			count = Integer.parseInt(name.substring(1));
         		}catch (NumberFormatException e) {
         			System.out.println("error processing: " + input + name);
         			System.out.flush();
@@ -177,7 +177,9 @@ public class Main {
         				Critter.makeCritter(name);
         			}
         		} catch (InvalidCritterException e) {
-        			e.printStackTrace();
+        			System.out.println("error processing: " + input +  " "+ name);
+					System.out.flush();
+        			continue;
         		}
         	}
         	else if(input.equals("stats")) {
@@ -216,6 +218,9 @@ public class Main {
 					System.out.flush();
         			continue;
 				}
+        	}
+        	else {
+        		System.out.println("invalid command: " + input);
         	}
         	System.out.flush();
         }

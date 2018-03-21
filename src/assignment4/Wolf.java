@@ -19,12 +19,14 @@ public class Wolf extends TestCritter {
 
  public boolean fight(String enemy) {
 			int roll1 = Critter.getRandomInt(GENE_TOTAL);
+			roll1 = 20;
 			//decide to walk away
+			int jack = 0;
 			if(roll1<=16) {
                 walk(dir);
 				//Other critters are in this position
 				for(int i = 0 ;i < getPopulation().size();i++) {
-					if(super.getX_coord()==getPopulation().get(i).getX()) {
+					if(super.getX_coord()==getPopulation().get(i).getX()&&!getPopulation().get(i).equals(this)) {
 						if(dir<4) {
 							dir+=4;
 							walk(dir);
@@ -55,7 +57,7 @@ public class Wolf extends TestCritter {
 				run(dir);
 				//other critters are in this position
 				for(int i = 0 ;i < getPopulation().size();i++) {
-					if(super.getX_coord()==getPopulation().get(i).getX()) {
+					if(super.getX_coord()==getPopulation().get(i).getX()&&!getPopulation().get(i).equals(this)&&super.getY_coord()==getPopulation().get(i).getY()) {
 						if(dir<4) {
 							dir+=4;
 							run(dir);
