@@ -11,7 +11,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import assignment4.Critter.TestCritter;
-
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
@@ -99,7 +98,11 @@ public class A4SampleTest{
      * Test for errors within valid inputs
      * Expects errors to be printed
 	 */
-	
+
+	@Test
+	public void name() {
+	}
+
 	@Test 
 	public void ParseErrors(){
 		

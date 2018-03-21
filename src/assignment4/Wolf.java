@@ -5,8 +5,8 @@ import assignment4.Critter.TestCritter;
 public class Wolf extends TestCritter {
 	private static final int GENE_TOTAL = 40;
 	private int[] genes = new int[8];
-	private int dir;	
-	
+	private int dir;
+
 	public Wolf() {
 		for (int k = 0; k < 8; k += 1) {
 			genes[k] = GENE_TOTAL / 8;
@@ -15,13 +15,13 @@ public class Wolf extends TestCritter {
 		permit_to_move = true;
 	}
 	@Override public String toString() { return "W"; }
-	
-	
-	public boolean fight(String enemy) { 
+
+
+ public boolean fight(String enemy) {
 			int roll1 = Critter.getRandomInt(GENE_TOTAL);
 			//decide to walk away
 			if(roll1<=16) {
-				walk(dir);
+                walk(dir);
 				//Other critters are in this position
 				for(int i = 0 ;i < getPopulation().size();i++) {
 					if(super.getX_coord()==getPopulation().get(i).getX()) {
@@ -46,7 +46,7 @@ public class Wolf extends TestCritter {
 					turn = turn + 1;
 				}
 				assert(turn < 8);
-				
+
 				dir = (dir + turn) % 8;
 				return false;
 			}
@@ -77,7 +77,7 @@ public class Wolf extends TestCritter {
 					turn = turn + 1;
 				}
 				assert(turn < 8);
-				
+
 				dir = (dir + turn) % 8;
 				return false;
 			}
@@ -85,13 +85,13 @@ public class Wolf extends TestCritter {
 				return true;
 			}
 	}
-	
+
 	public void doTimeStep() {
 		setEnergy(getEnergy() + Params.photosynthesis_energy_amount);
 		permit_to_move = true;
 		walk(dir);
 		permit_to_move = false;
-		
+
 		if(getEnergy()>=80) {
 			Wolf child = new Wolf();
 			for (int k = 0; k < 8; k += 1) {
@@ -106,7 +106,7 @@ public class Wolf extends TestCritter {
 			child.genes[g] += 1;
 			reproduce(child, Critter.getRandomInt(8));
 		}
-		
+
 		int roll = Critter.getRandomInt(GENE_TOTAL);
 		int turn = 0;
 		while (genes[turn] <= roll) {
@@ -114,7 +114,7 @@ public class Wolf extends TestCritter {
 			turn = turn + 1;
 		}
 		assert(turn < 8);
-		
+
 		dir = (dir + turn) % 8;
 	}
 }
